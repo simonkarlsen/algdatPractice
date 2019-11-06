@@ -1,0 +1,103 @@
+package no.kristiania.Hash;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MyHashMapWithLists<K,V> implements MyHashMap<K,V> {
+    private final int M = 997;
+
+    private class Entry{
+        K key;
+        V value;
+
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private List<Entry>[] data = new ArrayList[M];
+    //----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void put(K key, V value) {
+
+        int i = index(key);
+
+        if(data[i] == null){
+            data[i] = new ArrayList<>();
+        }
+
+        List<Entry> list = data[i];
+
+        for(int j=0; j<list.size(); j++){
+            Entry entry = list.get(j);
+            if(key.equals(entry.key)){
+                entry.value = value;
+                return;
+            }
+        }
+
+        //if we arrive here, it means the key is new
+        list.add(new Entry(key, value));
+    }
+
+    private int index(K key){
+        int positiveHash = key.hashCode() & 0x7f_ff_ff_ff;
+
+        return positiveHash % M;
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void delete(K key) {
+
+        int i = index(key);
+
+        if(data[i] == null){
+            return;
+        }
+
+        List<Entry> list = data[i];
+
+        for(int j=0; j<list.size(); j++){
+            Entry entry = list.get(j);
+            if(key.equals(entry.key)){
+                list.remove(j);
+                return;
+            }
+        }
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public V get(K key) {
+        int i = index(key);
+
+        if(data[i] == null){
+            return null;
+        }
+
+        List<Entry> list = data[i];
+
+        for(int j=0; j<list.size(); j++){
+            Entry entry = list.get(j);
+            if(key.equals(entry.key)){
+                return entry.value;
+            }
+        }
+
+        return null;
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int size() {
+
+        int size = 0;
+        for(int i=0; i<data.length; i++){
+            if(data[i] != null){
+                size += data[i].size();
+            }
+        }
+
+        return size;
+    }
+}
