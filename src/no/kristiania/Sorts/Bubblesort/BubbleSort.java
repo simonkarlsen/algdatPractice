@@ -1,6 +1,8 @@
 package no.kristiania.Sorts.Bubblesort;
 
-public class BubbleSort implements MySort{
+import no.kristiania.Sorts.MySort;
+
+public class BubbleSort implements MySort {
 
     @Override
     public <T extends Comparable<T>> void sort(T[] array) {

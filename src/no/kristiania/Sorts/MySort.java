@@ -1,4 +1,4 @@
-package no.kristiania.Sorts.Bubblesort;
+package no.kristiania.Sorts;
 
 public interface MySort {
 
