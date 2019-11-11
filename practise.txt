@@ -1,0 +1,16 @@
+
+
+
+
+public class MyMapBinarySearchTree<K extends Comparable <K>, V> implements MyMapTreeBased<K, V> {
+    protected class TreeNode {
+        public K key;
+        public V value;
+        public TreeNode left;
+        public TreeNode right;
+    }
+    protected TreeNode root;
+    protected int size;
+}
+
+

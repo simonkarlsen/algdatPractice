@@ -5,6 +5,7 @@ BubbleSort():
 - Return hvis array er null
 - boolean swapped er lik true
 - while (swapped)
+- swapped = false;
 - Vanlig for-loop
 - int j = i + 1 inne i loopen
 - hvis array[i] sammenlignet med array[j] er større enn 0
@@ -61,3 +62,51 @@ QuickSort():
             --> quickSort(j)
 
 
+---------------
+MergeSort():
+---------------
+- public class ... implements ...
+    - public <T extends ...... void sort(T[] array)
+    - Return hvis array er null
+    - T[] buffer = (T[])  new Comparable[array.length];
+    - mergeSort (0, array.length - 1, array, buffer);
+
+- private <T extends Comparable <T>> mergeSort (int low, int high, T[] array, T[] buffer) {
+    - if (low >= high), return
+    - int middle = low + (high - low) / 2;
+    - mergeSort(low, middle, array, buffer);
+    - mergeSort(middle + 1, high, array, buffer);
+    - merge(low, middle, high, array, buffer);
+
+- private <T extends Comparable <T>> void merge(int low, int high, int middle, T[] array, T[] buffer) {
+    - for (int i = low; i <= high; i++)
+        --> buffer[i] = array[i];
+    - int i = low;
+    - int j = middle + 1;
+
+    -  for (int k = low; k <= high; k++) {
+        * if(i > middle) {
+            --> array[k] = buffer[j++];
+
+        * else if (j > high) {
+            --> array[k] = buffer[i++];
+
+        * else if (buffer[j].compareTo(buffer[i]) < 0) {
+            --> array[k] = buffer[j++];
+
+        * else {
+            --> array[k] = buffer[i++];
+
+
+
+---------------------
+MyMapBinarySearchTree
+---------------------
+- public class MyMapBinarySearchTree<K extends Comparable<K>, V> implements MyMapTreeBased<K, V> {
+    - protected class TreeNode {
+        - public K key;
+        - public V value;
+        - public TreeNode left;
+        - public TreeNode right;
+    - protected TreeNode root;
+    - protected int size;
