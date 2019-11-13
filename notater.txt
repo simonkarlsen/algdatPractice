@@ -1,0 +1,158 @@
+Exam example 0
+--
+____
+
+1)   . 
+𝑓(𝑛) = O(𝑙𝑜𝑔 𝑛), 𝑔(𝑛) = Ω(𝑛), 𝑡(𝑛) = Ω(𝑛 𝑙𝑜𝑔 𝑛), 𝑘(𝑛) = O(𝑛2)
+
+* 1(. place): O(log n) (worst case) - this one is the best. Since it performs the best, even though it is the worst case.
+* 2: Omega(n) (best case)
+* 3: Omega(n log n) (best case)
+* 4(. - last place): O(n^2) (worst case)
+
+I would probably choose O(log n) because it performs very good with small and large data sets. Even the worst case scenario of f(n) is still better than the others. 
+
+2) 
+List is an ordered sequence of elements whereas Set is a distinct list of elements which is unordered.
+
+* List:
+      
+      An ordered collection (also known as a sequence). 
+      The user of this interface has precise control over where 
+      in the list each element is inserted. 
+      The user can access elements by their integer index (position in the list), 
+      and search for elements in the list.
+      
+* Set
+  
+       A collection that contains no duplicate elements.
+       More formally, sets contain no pair of elements         
+       e1 and e2 such that e1.equals(e2), and at most    
+       one null element. As implied by its name, 
+       this interface models the mathematical set    
+       abstraction.
+----------
+
+3) 
+* The main difference is that a red-black tree is a self-balancing tree, while a binary search tree is not. So a binary search tree is able to form long chains of nodes that can cause searches to take linear time, but a red-black tree guarantees (because it is self-balancing) a search operation takes logarithmic time.
+
+
+4) 
+- Immutable objects are objects that don't change. You make them, then you can't change them. Instead, if you want to change an immutable object, you must clone it and change the clone while you are creating it.
+.
+
+- The keys in a Map (and values in a Set) data structure must be immutable so that the keys / values will always be the same. That way, you can't loose them. If they are mutable, because if it's changed later after beeing added to hash it may be lost.
+.
+- If a key is modified after an insertion and the key follows the condition of equals() and hashMap() both before and after the modification, it will remain the same. If the key isn't following these conditions (mutable), the key will be "lost" (i.e. memory leak). 
+
+-----
+
+5) 
+(pipes in streams: )
+- Map: a pipe that transforms input, and also change type, based
+on a Function<T,R>
+
+      - Inputs a String and Outputs an Integer.
+      - Note: compiler automatically infer type “Integer” based
+      on the type returned by the function “String.length()”
+      - Example: collection.stream().map(s -> s.length())
+
+- FlatMap: get a stream from input element, and
+flatten it into the current stream (examples later)
+
+      - Inputs a List<Integer> and Outputs an Integer
+      - On each of the 3 input lists we open a stream, and propagate it's output,      one element at a time
+      - So the values of the 3 lists are flattened into a single stream of
+        integers, including all values in those lists
+
+
+6) . 
+1. If the data set I'm working on isn't large, then bubble sort would be the preferred choice.
+2. They are not equivalent. Bubble sort takes an iterative approach, looping through elements and swaps them. Merge sort is recursive and uses a divide-and-conquer approach.
+3. One isn't necessary always better than the other.
+4. It really depends on the context:
+5. Bubble sort is faster than merge sort when sorting smaller data set s(Omega(n) - best case. Merge sort have a best case of Omega(n log(n)) ). If the data set is large, then Merge sort would be preferred because it's faster when working on larger data sets. (The worst case for merge sort is same as the best case -> O(n log(n) ). The worst case of bubble sort is O(n^2) which is very bad.)
+
+7) .
+* You do not want to lose your best individuals
+
+      - Unlucky in (tournament) selection
+      - Negative mutations
+* At each generation, copy the best B individuals over the next generation, without xover or mutation
+* Even in evolution, some elite individuals still cheat the system and get preferential treatment…
+* (Elitism only means that the most fit handful of individuals are guaranteed a place in the next generation - generally without undergoing mutation. They should still be able to be selected as parents, in addition to being brought forward themselves)
+
+
+8) Quick sort: 
+
+- se class i intellij
+
+.
+
+9) . 
+    
+    
+    @Override
+    public List<V> findPathBFS(V start, V end) {
+
+        // same initial checks as in DFS
+
+        if(! graph.containsKey(start) || ! graph.containsKey(end)){
+            return null;
+        }
+
+        if(start.equals(end)){
+            throw new IllegalArgumentException();
+        }
+
+
+        Queue<V> queue = new ArrayDeque<>();
+        Map<V,V> bestParent = new HashMap<>();
+
+        queue.add(start);
+
+        mainLoop: while(! queue.isEmpty()){
+
+            V parent = queue.poll();
+
+            for(V child : graph.get(parent)){
+
+                if( child.equals(start) || bestParent.get(child) != null){
+                    continue;
+                }
+                bestParent.put(child, parent);
+
+                if(child.equals(end)){
+                    /*
+                        found a path, no need to analyze
+                        the rest of the queue
+                     */
+                    break mainLoop;
+                }
+
+                queue.add(child);
+            }
+        }
+
+        if(! bestParent.containsKey(end)){
+            return null;
+        }
+
+        /*
+            At this point, we know that there is a path.
+            So, starting from "end", we need to use the
+            bestParent map to backtrack the path from "end"
+            to "start"
+         */
+
+        List<V> path = new ArrayList<>();
+        V current = end;
+        while (current != null){
+            path.add(0, current);
+            current = bestParent.get(current);
+        }
+
+        return path;
+    }
+
+
