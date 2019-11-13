@@ -1,0 +1,260 @@
+
+________________________________________________________________________________________________________________________________________________________________________________________________
+
+EXAM EXAMPLE 0
+________________________________________________________________________________________________________________________________________________________________________________________________
+
+------------------------------------------------------------------------------------------------------------------------
+1) Consider 4 functions representing runtimes of 4 different algorithms for the same problem, for which
+we have the following bounds based on the input size n. What can you say about their relative
+performance? Which one is best? Which one would you choose? Motivate your answer in details.
+𝑓(𝑛) = O(𝑙𝑜𝑔 𝑛), 𝑔(𝑛) = Ω(𝑛), 𝑡(𝑛) = Ω(𝑛 𝑙𝑜𝑔 𝑛), 𝑘(𝑛) = O(𝑛2)
+........................................................................................................................
+
+* 1: O(log n) (worst case) - this one is the best. Since it performs the best, even though it is the worst case.
+* 2: Omega(n) (best case)
+* 3: Omega(n log n) (best case)
+* 4(. - last place): O(n^2) (worst case)
+
+I would probably choose O(log n) because it performs very good with small and large data sets.
+Even the worst case scenario of f(n) is still better than the others.
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+2) Explain the main differences between the List and the Set data structures
+........................................................................................................................
+List is an ordered sequence of elements whereas Set is a distinct list of elements which is unordered.
+
+* List:
+      - An ordered collection (also known as a sequence).
+      - The user of this interface has precise control over where
+      - in the list each element is inserted.
+      - The user can access elements by their integer index (position in the list),
+        and search for elements in the list.
+      
+* Set:
+       - A collection that contains no duplicate elements.
+       - More formally, sets contain no pair of elements
+         e1 and e2 such that e1.equals(e2), and at most
+         one null element. As implied by its name,
+         this interface models the mathematical set
+         abstraction.
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+3)  What are the main properties that differentiate Red-Black Trees from Binary Search Trees?
+........................................................................................................................
+* The main difference is that a red-black tree is a self-balancing tree, while a binary search tree is not.
+  So a binary search tree is able to form long chains of nodes that can cause searches to take linear time(O(n)),
+  but a red-black tree guarantees (because it is self-balancing) a search operation takes logarithmic time (O(log n)).
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+4) Explain what is an immutable object. Why the keys in a Map (and values in a Set) data structure must
+   be immutable? Explain in details, in particular what could happen if such keys are modified after an
+   insertion.
+........................................................................................................................
+- Immutable objects are objects that don't change. You make them, then you can't change them.
+  Instead, if you want to change an immutable object,
+  you must clone it and change the clone while you are creating it.
+.
+
+- The keys in a Map (and values in a Set) data structure must be immutable so that the keys / values will always be the
+  same. That way, you can't loose them.
+  If they are mutable, because if it's changed later after beeing added to hash it may be lost.
+
+- If a key is modified after an insertion and the key follows the condition of equals() and hashMap() both before and
+  after the modification, it will remain the same.
+  If the key isn't following these conditions (mutable), the key will be "lost" (i.e. memory leak).
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+5)  In relation to streams in data structures, explain in details what are the main differences between the
+    map and flatMap methods and what they do.
+........................................................................................................................
+
+- Map: a pipe that transforms input, and also change type, based
+on a Function<T,R>
+
+      - Inputs a String and Outputs an Integer.
+      - Note: compiler automatically infer type “Integer” based
+      on the type returned by the function “String.length()”
+      - Example: collection.stream().map(s -> s.length())
+
+- FlatMap: get a stream from input element, and
+flatten it into the current stream (examples later)
+
+      - Inputs a List<Integer> and Outputs an Integer
+      - On each of the 3 input lists we open a stream, and propagate it's output,      one element at a time
+      - So the values of the 3 lists are flattened into a single stream of
+        integers, including all values in those lists
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+6) If you need to sort some data, which of these two algorithms would you use: Bubble Sort or Merge
+   Sort? Are they equivalent? Or is one always better than the other? Or does it depend on the context? In
+   this latter case, in which contexts would one algorithm be better than the other, and vice-versa? Explain
+   in details.
+........................................................................................................................
+1. If the data set I'm working on isn't large, then bubble sort would be the preferred choice.
+2. They are not equivalent. Bubble sort takes an iterative approach, looping through elements and swaps them.
+   Merge sort is recursive and uses a divide-and-conquer approach.
+
+3. One isn't necessary always better than the other.
+
+4. It really depends on the context:
+
+   - Bubble sort is faster than merge sort when sorting smaller data set s(Omega(n) - best case.
+   - Merge sort have a best case of Omega(n log(n)) ).
+   - If the data set is large, then Merge sort would be preferred because it's faster when working on larger data sets.
+   - (The worst case for merge sort is same as the best case -> O(n log(n) ).
+   - The worst case of bubble sort is O(n^2) which is very bad.)
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+7) In the context of Genetic Algorithms, explain in details what Elitism is, what is used for, how it works,
+  and why it is important
+........................................................................................................................
+* You do not want to lose your best individuals
+
+      - Unlucky in (tournament) selection
+      - Negative mutations
+* At each generation, copy the best B individuals over the next generation, without xover or mutation
+* Even in evolution, some elite individuals still cheat the system and get preferential treatment…
+* (Elitism only means that the most fit handful of individuals are guaranteed a place in the next generation -
+  generally without undergoing mutation.
+  They should still be able to be selected as parents, in addition to being brought forward themselves)
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+ 8) Given the following method signature, implement a Quick Sort algorithm.
+    public <T extends Comparable<T>> void sort(T[] array)
+........................................................................................................................
+
+public class QuickSort implements MySort {
+    @Override
+    public <T extends Comparable <T>> void sort(T[] array) {
+        if(array == null) {
+            return;
+        }
+        quickSort(0, array.length-1, array);
+    }
+
+    private <T extends Comparable <T>> void quickSort(int low, int high, T[] array) {
+        int i = low;
+        int j = high;
+        T pivot = array[low + (high-low) / 2];
+
+        while(i <= j) {
+            while(array[i].compareTo(pivot) < 0) {
+                i++;
+            }
+            while(array[j].compareTo(pivot) > 0) {
+                j--;
+            }
+            if(i <= j) {
+                T tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+                i++;
+                j--;
+            }
+        }
+
+        if(j > low) {
+            quickSort(j, low, array);
+        }
+
+        if(i < high) {
+            quickSort(i, high, array);
+        }
+    }
+}
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+9) Implement a concrete Hash map for interface MyHashMap:
+........................................................................................................................
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+10) Considering the following beginning of the class for
+public List<V> findPathBFS(V start, V end):
+
+ protected Map<V, Set<V>> graph = new HashMap<>();
+ Implement a method for a Breadth-First Search with signature
+
+ public List<V> findPathBFS(V start, V end)
+ Assume that the rest of that class is implemented (as seen in class), but that the method findPathBFS is
+ missing and you need to implement it.
+........................................................................................................................
+
+
+    @Override
+    public List<V> findPathBFS(V start, V end) {
+        if(! graph.containsKey(start) || ! graph.containsKey(end)){
+            return null;
+        }
+
+        if(start.equals(end)){
+            throw new IllegalArgumentException();
+        }
+
+        Queue<V> queue = new ArrayDeque<>();
+        Map<V,V> bestParent = new HashMap<>();
+
+        queue.add(start);
+
+        mainLoop: while(! queue.isEmpty()){
+
+            V parent = queue.poll();
+
+            for(V child : graph.get(parent)){
+
+                if( child.equals(start) || bestParent.get(child) != null){
+                    continue;
+                }
+                bestParent.put(child, parent);
+
+                if(child.equals(end)){
+                    break mainLoop;
+                }
+                queue.add(child);
+            }
+        }
+
+        if(! bestParent.containsKey(end)){
+            return null;
+        }
+
+        List<V> path = new ArrayList<>();
+        V current = end;
+        while (current != null){
+            path.add(0, current);
+            current = bestParent.get(current);
+        }
+
+        return path;
+    }
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+________________________________________________________________________________________________________________________________________________________________________________________________

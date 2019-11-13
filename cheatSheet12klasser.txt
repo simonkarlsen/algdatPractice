@@ -1,59 +1,64 @@
 BubbleSort():
 ---------------
 - public class ... implements ...
-- public <T extends ...... void sort(T[] array)
-- Return hvis array er null
-- boolean swapped er lik true
-- while (swapped)
-- swapped = false;
-- Vanlig for-loop
-- int j = i + 1 inne i loopen
-- hvis array[i] sammenlignet med array[j] er større enn 0
-    - -->   T tmp er lik array[i]
-    -       array[i] er lik array[j];
-    -       array[j] er lik tmp;
-            swapped er true
+    - public <T extends ...... void sort(T[] array)
+        - Return hvis array er null
+        - boolean swapped er lik true
+        - while (swapped)
+            - swapped = false;
+            - Vanlig for-loop
+                - int j = i + 1 inne i loopen
+                - hvis array[i] sammenlignet med array[j] er større enn 0
+                    - T tmp er lik array[i]
+                    - array[i] er lik array[j];
+                    - array[j] er lik tmp;
+                    - swapped er true
 
 ---------------
 InsertionSort():
 ---------------
 - public class ... implements ...
-- public <T extends ...... void sort(T[] array)
-- Return hvis array er null
-- Vanlig for-loop
-    --> -if: array[j] sammenlignet med array[j + 1] er større enn 0
-        --> - T tmp er lik array[j +1];
-            - array[j + 1] er lik array[j];
-            - array[j] er lik tmp
-        -else
-            --> break;
+    - @Override
+    - public <T extends ...... void sort(T[] array)
+        - Return hvis array er null {}
+        - Vanlig for-loop
+        - for (int j = i - 1; j > 0; j--) {
+        --> - if: array[j] sammenlignet med array[j + 1] er større enn 0
+            --> - T tmp er lik array[j + 1];
+                - array[j + 1] er lik array[j];
+                - array[j] er lik tmp
+            -else
+                --> break;
 
 
 ---------------
 QuickSort():
 ---------------
 - public class ... implements ...
+- @Override
 - public <T extends ...... void sort(T[] array)
-- Return hvis array er null
-- quickSort(0, array.length - 1, array);
+    - Return hvis array er null {}
+    - quickSort(0, array.length - 1, array);
+
 - private T<extends osv.. quickSort(int low, int high, T[] array)
-    --> - int i = low
-        - int j = high
-        - T pivot = array[low + (high-low) / 2];
+--> - int i = low
+    - int j = high
+    - T pivot = array[low + (high-low) / 2];
 
         - while(i <= j)
-            --> - while array[i].compareTo(pivot) < 0
-                       --> - i++;
+        --> - while array[i].compareTo(pivot) < 0
+            --> - i++;
 
-                - while array[j].compareTo(pivot) > 0
-                       --> - j--;
+            - while array[j].compareTo(pivot) > 0
+            --> - j--;
 
-                - if(i <= j)
-                       --> - T tmp = array[i];
-                            - array[i] = array[j];
-                            - array[j] = tmp;
-                            - i++;
-                            - j--;
+            - if(i <= j)
+            --> - T tmp = array[i];
+                - array[i] = array[j];
+                - array[j] = tmp;
+                - i++;
+                - j--;
+
         (ifs under er utenfor første while!)
         - if(j > low)
             --> quickSort(j, low, array);
@@ -66,8 +71,9 @@ QuickSort():
 MergeSort():
 ---------------
 - public class ... implements ...
+    -- @Override
     - public <T extends ...... void sort(T[] array)
-    - Return hvis array er null
+    - Return hvis array er null {}
     - T[] buffer = (T[])  new Comparable[array.length];
     - mergeSort (0, array.length - 1, array, buffer);
 
@@ -81,6 +87,7 @@ MergeSort():
 - private <T extends Comparable <T>> void merge(int low, int high, int middle, T[] array, T[] buffer) {
     - for (int i = low; i <= high; i++)
         --> buffer[i] = array[i];
+
     - int i = low;
     - int j = middle + 1;
 
@@ -99,14 +106,4 @@ MergeSort():
 
 
 
----------------------
-MyMapBinarySearchTree
----------------------
-- public class MyMapBinarySearchTree<K extends Comparable<K>, V> implements MyMapTreeBased<K, V> {
-    - protected class TreeNode {
-        - public K key;
-        - public V value;
-        - public TreeNode left;
-        - public TreeNode right;
-    - protected TreeNode root;
-    - protected int size;
+

@@ -1,0 +1,446 @@
+
+________________________________________________________________________________________________________________________________________________________________________________________________
+
+EXAM EXAMPLE 1
+________________________________________________________________________________________________________________________________________________________________________________________________
+
+------------------------------------------------------------------------------------------------------------------------
+1) Explain in details what are the main differences (if any) between the Queue and the Stack data
+structures:
+........................................................................................................................
+* Stack:
+    - Last In First Out (LIFO) order.
+    - Objects are inserted and removed at the same end.
+    - The last inserted object is first to come out.
+    - Stack operations are called push and pop (and peek).
+    - Stacks are visualized as vertical collections.
+        --> Collection of dinner plates stacked on top of each other is an example
+
+* Queue:
+    - First In First Out (FIFO) order.
+    - Objects are inserted and removed from different ends.
+    - The object inserted first is first deleted.
+    - Queue operations are called enqueue and dequeue.
+    - Queues are visualized as horizontal collections:
+        --> People standing in a file to board a bus is an example of queue.
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+2) On the same problem, consider two algorithms A and B with worst case complexity for their runtime
+being bound by O(n) for A, and by O(log n) for B. Is B always going to be better and preferable over A? If
+yes, then explain why. If not, explain in which cases A could be actually better than B.
+........................................................................................................................
+A = O(n)
+B = O(log n)
+
+B is the fastest algorithm if you look at the worst case. That means that it will most likely be the best fitting
+algorithm if you are working with a big dataset (many elements).
+
+However, if you are working with small datasets, A can actually be the preferred choice (depending on the context).
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+3) If you need to find an element X in an array of size n, what is the complexity of the worst case, i.e.
+O(f(n)), of number of comparisons you need to do before finding X? What can you do to improve it (and
+by how much?) if you know that the array is sorted?
+........................................................................................................................
+In this situation, the time it takes to find x depends on how many elements the array contains.
+That means that the time complexity is O(n), linear time. As the number of elements grow, it takes longer time to find
+to find x.
+
+If the array is sorted, it means that you can find x without looking through the entire array - you can skip some
+elements (like going to either the left sorted partition or the right sorted partition based on the pivot).
+That means that the time complexity would be O(log n).
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+4) Consider the following code in an implementation of a Hash Map, where M is the size of the internal
+array, and the method index returns a position in the array based on the hash code of the key:
+private int index(K key){
+ int hash = key.hashCode() & 0x7f_ff_ff_ff;
+ return hash % M;
+}
+Why there is the need for “& 0x7f_ff_ff_ff”? What does it do? What could happen if that
+instruction is removed? Explain in details.
+........................................................................................................................
+
+* 0x7FFFFFFF is 0111 1111 1111 1111 1111 1111 1111 1111 : all 1 except the sign bit
+* & 0x7FFFFFFF makes sure the hash is positive, by throwing away its first leftmost bit
+ (which define the sign of the number).
+* The result of % M is a value in 0..M-1
+
+* If you are indexing into an array, it wouldn't be good to have a negative value for the index. You need an index
+  that is 0 or a positive number.
+  Example: -1(hash) % 10(M) == -1
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+5) On graphs, what is the difference between a Depth-First Search (DFS) and a Breadth-First Search
+(BFS)? Which one should you use? What are the tradeoffs? Explain in details.
+........................................................................................................................
+
+Depth-First Search (DFS) / (Instance of Trémaux's Algorithm):
+    - Trying to find a path from vertex X to Y
+    - Marks current vertex as visited
+    - Recursively look at each connected vertex from the current
+            --> But skip already marked vertices (eg, by using a set)
+    - Uses stack to represent path from X toward current vertex
+            --> Push when recursively evaluate a connected vertex
+            --> Pop when backtrack out of a recursive call
+   Example:
+            A
+           / \
+          B   C
+         /   / \
+        D   E   F
+
+Output: A, B, C, D, E, F
+
+
+
+Breadth First Search (BFS) :
+    - DFS gives no guarantee to find the shortest path, whereas BFS does
+    - From starting point X, look at all paths of length 1 then all paths
+      of length 2,  then 3, … then N, until found Y or visited whole graph.
+    - Considering paths without cycles.
+    - Need special algorithm to keep track and visit all
+      paths of length N in increasing order
+    - Uses a queue of yet to visit vertices
+    - Pull vertex from queue, add connected vertices to
+      back, if not already visited
+    - Keep track of which pulled vertex X added a
+      connected vertex Y
+
+    Example:
+            A
+           / \
+          B   C
+         /   / \
+        D   E   F
+
+Output: A, B, C, D, E, F
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            CONCLUSION:
+            * BFS guarantees to find minimum path, whereas DFS does not
+            * However, BFS is “usually” more expensive, both in terms of time and memory
+
+            * BFS is more suitable for searching verteces which are closer to the given source.
+            * DFS is more suitable when there are solutions away from source.
+
+             //////////////////////////////////////////////////////////////////////////////////////////////////////
+            |EXTRA:                                                                                                |
+            |* DFS is more suitable for game or puzzle problems. We make a decision, then explore all paths through|
+            |   this decision. And if this decision leads to win situation, we stop.                               |
+            |                                                                                                      |
+            |* BFS considers all neighbors first and therefore not suitable for decision making trees used in games|
+            |  or puzzles.                                                                                         |
+             \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+6) Consider a telephone number as an 8 digit number. It might be preceded by a country code, which is
+either a + or 00 followed by 2 digits. Write a regular expression to match strings representing valid
+telephone numbers with such constraints.
+........................................................................................................................
+
+((\+|00)[0-9]{2})?[0-9]{8}
+
+This means:
+            * (\+|00) --> Either a + or 00. ("+" must be escaped with \)
+
+            * [0-9]{2} --> Any digit between 0 and 9. Repeated exactly 2 times.
+
+            * ? --> Previous block inside () is optional: can be there or not
+
+            * [0-9]{8} --> Any digit between 0 and 9. Repeated exactly 8 times.
+
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+7) In the context of decision problems, what are the set P and the set NP? Is P==NP? Or is P!=NP? Explain
+in details.
+........................................................................................................................
+
+
+
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------------
+8) Given the following method signature, implement a Merge Sort algorithm.
+public <T extends Comparable<T>> void sort(T[] array)
+........................................................................................................................
+
+public class MergeSort implements MySort {
+
+    @Override
+    public <T extends Comparable<T>> void sort(T[] array) {
+        if (array == null) {
+            return;
+        }
+        T[] buffer = (T[]) new Comparable[array.length];
+        mergesort(0, array.length - 1, array, buffer);
+    }
+
+    private <T extends Comparable<T>> void mergesort(int low, int high, T[] array, T[] buffer) {
+        if (low >= high) {
+            return;
+        }
+        int middle = low + (high - low) / 2;
+        mergesort(low, middle, array, buffer);
+        mergesort(middle + 1, high, array, buffer);
+        merge(low, middle, high, array, buffer);
+    }
+
+    private <T extends Comparable<T>> void merge(int low, int middle, int high, T[] array, T[] buffer) {
+
+        for (int i = low; i <= high; i++) {
+            buffer[i] = array[i];
+        }
+        //index over the left half, before middle
+        int i = low;
+        //index over the right half, after middle
+        int j = middle + 1;
+
+        for (int k = low; k <= high; k++) {
+            if (i > middle) {
+                //done with left half, just copy over the right
+                array[k] = buffer[j++];
+            } else if (j > high) {
+                //done with right half, just copy over the left
+                array[k] = buffer[i++];
+            } else if (buffer[j].compareTo(buffer[i]) < 0) {
+                array[k] = buffer[j++];
+            } else {
+                array[k] = buffer[i++];
+            }
+        }
+    }
+}
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+9) Consider the following implementation of a flatMap() method from the MyStreamSupport class seen
+in the course. Such implementation is incomplete. Add the missing code in the accept() method.
+........................................................................................................................
+
+@Override
+public <R> MyStream<R> flatMap(Function<OUT, MyStream<R>> mapper) {
+    Objects.requireNonNull(mapper);
+    return new Pipeline<OUT, R, T>(this) {
+        @Override public
+        ChainedReference<OUT, R> chainConsumerToCurrentPipe(Consumer<R> consumer) {
+            return new ChainedReference<OUT, R>(consumer) {
+                @Override
+                 public void accept(OUT u) {
+                    MyStream<R> result = mapper.apply(u);
+                     if (result != null) {
+                        result.forEach(downstream);
+                      }
+                 }
+            };
+        }
+    };
+}
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+10) Given the following interface, implement it in a concrete class using a Binary Search Tree.
+........................................................................................................................
+
+public interface MyMap<K extends Comparable<K>, V> {
+     /**
+     * Create a mapping from the given Key to the given Value.
+    * If a mapping for Key already exists, replace the old
+    * value with this new one
+    */
+    void put(K key, V value);
+        /**
+        * Remove the given key from the container.
+        */
+    void delete(K key);
+         /**
+        * Return the value in the container mapped by the given key
+        */
+    V get(K key);
+        /**
+        * The number of elements in the container
+        */
+    int size();
+        /**
+        * Check if there is no element in the container
+        */
+    default boolean isEmpty(){
+        return size() == 0;
+    }
+}
+........................................................................................................................
+
+public class MyMapBinarySearchTree<K extends Comparable<K>, V> implements MyMapTreeBased<K, V> {
+    protected class TreeNode {
+        public K key;
+        public V value;
+        public TreeNode left;
+        public TreeNode right;
+    }
+
+    protected TreeNode root;
+    protected int size;
+
+    @Override
+    public void put(K key, V value) {
+        Objects.requireNonNull(key);
+        root = put(key, value, root);
+    }
+
+    private TreeNode put(K key, V value, TreeNode subtree) {
+        if (subtree == null) {
+            TreeNode node = new TreeNode();
+            node.key = key;
+            node.value = value;
+            size++;
+            return node;
+        }
+
+        int cmp = key.compareTo(subtree.key);
+        if (cmp < 0) {
+            subtree.left = put(key, value, subtree.left);
+            return subtree;
+        }
+        if (cmp > 0) {
+            subtree.right = put(key, value, subtree.right);
+            return subtree;
+        }
+        assert cmp == 0;
+        subtree.value = value;
+        return subtree;
+    }
+
+    @Override
+    public void delete(K key) {
+        Objects.requireNonNull(key);
+        root = delete(key, root);
+    }
+
+    protected TreeNode delete(K key, TreeNode subtreeRoot) {
+
+        if (subtreeRoot == null) {
+            return null;
+        }
+        int cmp = key.compareTo(subtreeRoot.key);
+        if (cmp < 0) {
+            subtreeRoot.left = delete(key, subtreeRoot.left);
+            return subtreeRoot;
+        }
+        if (cmp > 0) {
+            subtreeRoot.right = delete(key, subtreeRoot.right);
+            return subtreeRoot;
+        }
+        assert cmp == 0;
+        size--;
+
+        if (subtreeRoot.left == null) {
+            return subtreeRoot.right;
+        }
+        if (subtreeRoot.right == null) {
+            return subtreeRoot.left;
+        }
+
+        assert subtreeRoot.left != null && subtreeRoot.right != null;
+
+        TreeNode tmp = subtreeRoot;
+        subtreeRoot = min(tmp.right);
+        subtreeRoot.right = deleteMin(tmp.right);
+        subtreeRoot.left = tmp.left;
+
+        return subtreeRoot;
+    }
+    private TreeNode min(TreeNode subtreeRoot) {
+        if (subtreeRoot.left == null) {
+            return subtreeRoot;
+        }
+        return min(subtreeRoot.left);
+    }
+
+    private TreeNode deleteMin(TreeNode subtreeRoot) {
+        if (subtreeRoot.left == null) {
+            return subtreeRoot.right;
+        }
+        subtreeRoot.left = deleteMin(subtreeRoot.left);
+        return subtreeRoot;
+    }
+
+    @Override
+    public V get(K key) {
+        Objects.requireNonNull(key);
+        return get(key, root);
+    }
+
+    private V get(K key, TreeNode subtreeRoot) {
+        if (subtreeRoot == null) {
+            return null;
+        }
+        int cmp = key.compareTo(subtreeRoot.key);
+        if (cmp == 0) {
+            return subtreeRoot.value;
+        } else if (cmp > 0) {
+            return get(key, subtreeRoot.right);
+        } else if (cmp < 0) {
+            return get(key, subtreeRoot.left);
+        }
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public int getMaxTreeDepth() {
+        if (root == null) {
+            return 0;
+        }
+        return depth(root);
+    }
+
+    protected int depth(TreeNode node) {
+        int leftDepth = 0;
+        int rightDepth = 0;
+
+        if (node.left != null) {
+            leftDepth = depth(node.left);
+        }
+        if (node.right != null) {
+            rightDepth = depth(node.right);
+        }
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
+}
+
+........................................................................................................................
+------------------------------------------------------------------------------------------------------------------------
+
+________________________________________________________________________________________________________________________________________________________________________________________________
