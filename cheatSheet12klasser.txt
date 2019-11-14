@@ -6,13 +6,13 @@ BubbleSort():
         - boolean swapped er lik true
         - while (swapped)
             - swapped = false;
-            - Vanlig for-loop
+            - For-loop med i < array.length - 1
                 - int j = i + 1 inne i loopen
-                - hvis array[i] sammenlignet med array[j] er større enn 0
+                -  if(array[i].compareTo(array[j]) > 0 ){
                     - T tmp er lik array[i]
                     - array[i] er lik array[j];
                     - array[j] er lik tmp;
-                    - swapped er true
+                    - swapped = true;
 
 ---------------
 InsertionSort():
@@ -23,7 +23,7 @@ InsertionSort():
         - Return hvis array er null {}
         - Vanlig for-loop
         - for (int j = i - 1; j > 0; j--) {
-        --> - if: array[j] sammenlignet med array[j + 1] er større enn 0
+        --> - if (array[j].compareTo(array[j + 1]) > 0) {
             --> - T tmp er lik array[j + 1];
                 - array[j + 1] er lik array[j];
                 - array[j] er lik tmp
@@ -106,4 +106,90 @@ MergeSort():
 
 
 
+-------------------------
+ MyHashMapWithLists<K, V>
+-------------------------
 
+public class MyHashMapWithLists<K, V> implements MyHashMap<K, V> {
+    private final int M = 997; //prime number
+
+    private class Entry {
+        K key;
+        V value;
+
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    private List<Entry>[] data = new ArrayList[M];
+
+    @Override
+        public void put(K key, V value) {
+            int i = index(key);
+            if(data[i] == null) {
+                data[i] = new ArrayList<>();
+            }
+
+            List<Entry> list = data[i];
+
+            for(int j = 0; j < list.size(); j++) {
+                Entry entry = list.get(j);
+                if(key.equals(entry.key)) {
+                    entry.value = value;
+                    return;
+                }
+            }
+            list.add(new Entry(key, value));
+        }
+
+        private int index(K key) {
+            int positiveHash = key.hashCode() & 0x7f_ff_ff_ff; //need to have this mask in order to get a positive hash! A negative number would be bad!
+                return positiveHash % M;
+        }
+
+
+    *  @Override
+          public void delete(K key) {
+          //samme som put(), bare at:
+            if(data[i] == null){
+                return;
+            }
+          }
+
+           //, at:
+            if(key.equals(entry.key)){
+                list.remove(j);
+                return;
+            }
+
+            // - returnerer ikke noe utenfor for-loopen
+
+
+      *  @Override
+              public V get(K key) {
+              //samme som delete(), bare at:
+                if(data[i] == null){
+                    return null;
+                }
+              }
+
+               //, at:
+                if(key.equals(entry.key)){
+                    return entry.value;
+                }
+
+                * return null utenfor for-loopen
+
+      *     @Override
+            public int size() {
+                int size = 0;
+                for(int i=0; i<data.length; i++){
+                    if(data[i] != null){
+                        size += data[i].size();
+                    }
+                }
+                return size;
+            }
+        }
