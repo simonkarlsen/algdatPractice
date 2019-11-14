@@ -7,8 +7,178 @@ BIG O SHORTHANDS:
 * Variable assignment is constant
 * Accessing elements in an array (by index) or object (by key) is constant
 * In a loop, the complexity is the length of the loop times the complexity of whatever happens inside the loop
+
+* 1: constant (best you can have)
+* log(N): logarithmic very, very efficient
+* N: linear (OK for most cases)
+* N log(N): linearithmic (OK for most cases)
+* N^2: quadratic (bearable, but things start to get
+* N^3: cubic (becoming painful)
+* 2^n: exponential (completely hopeless , time to cry in a corner)
+
+
+Big O Rules of Thumb:
+• When you have a polynomial, for upper bound just
+  look at the highest exponent
+• 𝑎𝑛3+𝑏𝑛2+𝑐𝑛+𝑑 = 𝑂(𝑛3)
+• This means that, when analyzing an algorithm, you
+  can ignore the parts with less impact
+• When representing constants independent from the
+  problem size, just use 1 by convention, eg 𝑂1
+
+
+Big Ω Lower Bound
+•𝑓(𝑛) = Ω(𝑔(𝑛))
+•In other words, 𝑔(𝑛) is a lower bound
+•Useful to consider how expensive algorithm is even
+ in the best possible scenario
+• Ω(1) is a trivial lower bound valid for all functions
+
+
+Big Θ Tight Bound
+• 𝑓(𝑛) = Θ(𝑔(n))
+• This happens when the lower and
+  upper bounds are asymptotically the same (and just
+  differ by the constant)
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Bubble Sort:
+ • Easiest sorting algorithms
+ • From left to right
+ • Look at adjacent cards, and swap them if not in
+   order
+ • Repeat from left to right till no more swap
+
+ Runtime of Bubble Sort
+ • To sort N cards, need at most N iterations, in which
+ you check at most N-1 pairs
+ • Even if already sorted, need to check each of N-1
+ pairs at least once, to see if indeed sorted
+ • Ω(𝑁) and O(𝑁^2) pair comparisons
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+Insertion Sort
+• An array of size 0 or 1 is
+always considered sorted
+• From left to right, till length N
+• K-leftmost values are sorted
+• Position K+1 is not sorted,
+insert it in the first K
+• by swapping adjacent elements,
+  like in Bubble Sort
+• Best case: already sorted, eg. 1-2-3-4-5-6. Need to do N-1 comparisons, so Ω(N)
+• Worst case: opposite order, e.g. 6-5-4-3-2-1. Each element needs to be compared and
+  swapped with all previous K ones, so O(N^2)
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Recursion:
+
+Recursion in computer science is a method
+of solving a problem where the solution
+depends on solutions to smaller instances
+of the same problem (as opposed to
+iteration)… Most computer programming
+languages support recursion by allowing a
+function to call itself from within its own
+code.
+You need a way to stop it(reduce input and stop condition), otherwise it will go on forever (stack overflow)
+
+Recursion vs. Iterative
+• Iterative versions of algorithms are “usually” better
+• recall that each recursive call has to create and push a new function call
+frame
+• However, there are many algorithms that are easier and
+more efficient to write in a recursive form
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Merge Sort:
+• Divide and Conquer
+• Recursive implementation
+• Split the array in two
+• Sort the two parts
+• Merge the two parts once sorted
+
+
+Merge of Halves
+• By recursion, I can sort the 2 halves, but array with 2 sorted halves is not sorted
+• Scan the 2 halves, and copy min to a new array
+• Between N/2 and N comparisons: once reached end of one half, copy over the other
+
+Cost
+• Cost based on 2 recursive calls and then merge
+• C(1) = O(1)
+• C(n) >= C(n/2) + C(n/2) + n/2
+• Best case for merge, only have to look at one of the halves
+• Eg, all elements in half A are lower than first element in half B
+• C(n) <= C(n/2) + C(n/2) + n
+• Worst case for merge, need to look at whole of both halves
+• … 𝐶 𝑛 = Θ(𝑛 log 𝑛)
+
+Considerations
+• Asymptotically, does not exist comparison-based
+sorting better than O(n log n)
+• Merge-sort is therefore asymptotically optimal
+• Ie, no instance for which get worse than O(n log n)
+• But… more memory, need extra array buffer
+• … might be not best on average
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Quick Sort:
+• Most used sorting algorithm
+• Ie, usually it is the default in the language APIs
+• Fast on average, usually “n log n”
+• Better “constant” compared to Merge Sort (eg, no moving data
+to buffer)
+• But can go till 𝑛^2 in worst case
+• Minimal memory overhead
+• Lot of variants studied during the years
+
+• Still Divide and Conquer algorithm, like Merge Sort
+• Choose a value X (pivot)
+• Move values <X before X, and >X after it
+• After one step X is in the correct position
+• Apply recursion on subarrays before and after X
+
+Choice of Pivot
+• Choice of pivot is crucial for
+performance of Quick Sort
+• pivot = array[i]
+• For performance, would like a
+pivot value that gives the 2
+partitions of equal size
+• How to choose “i”?
+• An option is to take “i” at random
+• Another option is to take middle, which is
+good when array nearly sorted
+
+Which Sorting Algorithm to
+Use?:
+• Unless you have very specific, advanced cases,
+you use the default of what is given by the standard
+library of the language/framework you use
+• Most of the time, it will be a variant of Quick Sort
+• Fast on average, often “n log n” cost, no extra memory
 -----------------------
+
+
+
 ________________________________________________________________________________________________________________________
+Test Driven Development (TDD):
+• Bugs in the field can be extremely expensive
+• Ariane 5 explosion, Toyota braking system (100k recalled cars), etc
+• Aim at improving quality (“testing”) within acceptable
+cost
+• Lot of hype on TDD as possible solution
+
+Some Facts on TDD:
+• There isn’t much scientific evidence that it helps on
+large scale systems
+• Small improvements in quality, but also small decrease in
+productivity
+• But many anecdotal, success stories
+• TDD can be useful, especially for students / junior developers
+• As any technique, its success depends on the context
+    - eg, type of software, stage in which TDD is introduced (at the beginning or in a
+      mature project), etc
+• Can test software even without TDD
+• Success of TDD depends also on management
+
 
 ________________________________________________________________________________________________________________________
 GRAPHS:
@@ -20,9 +190,7 @@ GRAPHS:
 • Directed or Undirected graphs
     - If edge from X to Y, implies edge from Y to X?
 
-* Vertex: a node, for which can use a label to identify it
-
-* connection between 2 nodes
+* Vertex: a node, for which can use a label to identify its connection between 2 nodes
 
 * Path: a sequence of connected nodes
 

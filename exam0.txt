@@ -119,6 +119,7 @@ flatten it into the current stream (examples later)
    - If the data set is large, then Merge sort would be preferred because it's faster when working on larger data sets.
    - (The worst case for merge sort is same as the best case -> O(n log(n) ).
    - The worst case of bubble sort is O(n^2) which is very bad.)
+   - However, Bubble Sort has a much better Space Complexity (O(1)), so space wise it would be better.
 ........................................................................................................................
 ------------------------------------------------------------------------------------------------------------------------
 
