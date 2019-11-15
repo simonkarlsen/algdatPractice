@@ -92,9 +92,10 @@ Depth-First Search (DFS) / (Instance of Trémaux's Algorithm):
     - Marks current vertex as visited
     - Recursively look at each connected vertex from the current
             --> But skip already marked vertices (eg, by using a set)
-    - Uses stack to represent path from X toward current vertex
+    - Uses STACK to represent path from X toward current vertex
             --> Push when recursively evaluate a connected vertex
             --> Pop when backtrack out of a recursive call
+    -  Gives no guarantee to find the shortest path
    Example:
             A
            / \
@@ -113,7 +114,7 @@ Breadth First Search (BFS) :
     - Considering paths without cycles.
     - Need special algorithm to keep track and visit all
       paths of length N in increasing order
-    - Uses a queue of yet to visit vertices
+    - Uses a QUEUE of yet to visit vertices
     - Pull vertex from queue, add connected vertices to
       back, if not already visited
     - Keep track of which pulled vertex X added a
@@ -158,6 +159,7 @@ telephone numbers with such constraints.
 
 ((\+|00)[0-9]{2})?[0-9]{8}
 
+
 This means:
             * (\+|00) --> Either a + or 00. ("+" must be escaped with \)
 
@@ -175,7 +177,14 @@ This means:
 7) In the context of decision problems, what are the set P and the set NP? Is P==NP? Or is P!=NP? Explain
 in details.
 ........................................................................................................................
-
+P
+•P is the set of all decision problems that can be solved in
+polynomial time
+•P is at least a subset of NP … but is it a strict subset???
+•P = NP ???•
+•P != NP ???
+•This is arguably the most important question in computer
+science for which we do not have an answer (yet)
 
 
 ........................................................................................................................

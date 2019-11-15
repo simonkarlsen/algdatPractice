@@ -29,8 +29,7 @@ List is an ordered sequence of elements whereas Set is a distinct list of elemen
 
 * List:
       - An ordered collection (also known as a sequence).
-      - The user of this interface has precise control over where
-      - in the list each element is inserted.
+      - The user of this interface has precise control over where in the list each element is inserted.
       - The user can access elements by their integer index (position in the list),
         and search for elements in the list.
       
@@ -48,6 +47,9 @@ List is an ordered sequence of elements whereas Set is a distinct list of elemen
 ------------------------------------------------------------------------------------------------------------------------
 3)  What are the main properties that differentiate Red-Black Trees from Binary Search Trees?
 ........................................................................................................................
+* RBT = self balancing (guaranteed O(log n) )
+* BST = Not self balancing! Can be O(n) in worst case! (Best case: O(log n))
+
 * The main difference is that a red-black tree is a self-balancing tree, while a binary search tree is not.
   So a binary search tree is able to form long chains of nodes that can cause searches to take linear time(O(n)),
   but a red-black tree guarantees (because it is self-balancing) a search operation takes logarithmic time (O(log n)).
@@ -60,7 +62,7 @@ List is an ordered sequence of elements whereas Set is a distinct list of elemen
    be immutable? Explain in details, in particular what could happen if such keys are modified after an
    insertion.
 ........................................................................................................................
-- Immutable objects are objects that don't change. You make them, then you can't change them.
+- Immutable objects are objects that don't change! You make them, then you can't change them.
   Instead, if you want to change an immutable object,
   you must clone it and change the clone while you are creating it.
 .
@@ -90,10 +92,10 @@ on a Function<T,R>
       - Example: collection.stream().map(s -> s.length())
 
 - FlatMap: get a stream from input element, and
-flatten it into the current stream (examples later)
+flatten it into the current stream
 
       - Inputs a List<Integer> and Outputs an Integer
-      - On each of the 3 input lists we open a stream, and propagate it's output,      one element at a time
+      - On each of the 3 input lists we open a stream, and propagate it's output, one element at a time
       - So the values of the 3 lists are flattened into a single stream of
         integers, including all values in those lists
 ........................................................................................................................
@@ -106,7 +108,7 @@ flatten it into the current stream (examples later)
    this latter case, in which contexts would one algorithm be better than the other, and vice-versa? Explain
    in details.
 ........................................................................................................................
-1. If the data set I'm working on isn't large, then bubble sort would be the preferred choice.
+1. If the data set I'm working on isn't large (not many n elements), then bubble sort would be the preferred choice.
 2. They are not equivalent. Bubble sort takes an iterative approach, looping through elements and swaps them.
    Merge sort is recursive and uses a divide-and-conquer approach.
 
@@ -115,7 +117,7 @@ flatten it into the current stream (examples later)
 4. It really depends on the context:
 
    - Bubble sort is faster than merge sort when sorting smaller data set s(Omega(n) - best case.
-   - Merge sort have a best case of Omega(n log(n)) ).
+   - Merge sort have a best case (average) of Omega(n log(n)) ).
    - If the data set is large, then Merge sort would be preferred because it's faster when working on larger data sets.
    - (The worst case for merge sort is same as the best case -> O(n log(n) ).
    - The worst case of bubble sort is O(n^2) which is very bad.)

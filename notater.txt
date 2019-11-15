@@ -157,6 +157,8 @@ library of the language/framework you use
 -----------------------
 
 
+Polynomial time. An algorithm is said to be of polynomial time if its running time is upper bounded by a polynomial
+expression in the size of the input for the algorithm, i.e., T(n) = O(nk) for some positive constant k.
 
 ________________________________________________________________________________________________________________________
 Test Driven Development (TDD):
